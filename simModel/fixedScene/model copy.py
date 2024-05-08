@@ -69,6 +69,7 @@ class Model:
         self.nb = NetworkBuild(self.dataBase, netFile, obsFile)
         self.nb.getData()
         self.nb.buildTopology()
+        # 这个数据结构包含了静态场景数据
         self.ls = LocalScene(self.nb, self.dv)
 
         self.allvTypes = None

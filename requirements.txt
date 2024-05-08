@@ -7,3 +7,6 @@ PyYAML==6.0
 rich==13.4.2
 sumolib==1.16.0
 traci==1.16.0
+eclipse-sumo==1.15.0
+lxml
+carla==0.9.15

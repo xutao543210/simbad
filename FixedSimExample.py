@@ -27,13 +27,18 @@ if __name__ == '__main__':
     fmodel.start()
     planner = TrafficManager(fmodel)
 
+    # 当本次仿真没有结束
     while not fmodel.simEnd:
+
         fmodel.moveStep()
         if fmodel.timeStep % 5 == 0:
+            # 这个函数相当于导出信息
+            # 通过导出的信息求解轨迹
             roadgraph, vehicles = fmodel.exportSce()
             if roadgraph:
                 trajectories = planner.plan(
                     fmodel.timeStep * 0.1, roadgraph, vehicles)
+                # 将轨迹作用于fmodel
                 fmodel.setTrajectories(trajectories)
 
         fmodel.updateVeh()
