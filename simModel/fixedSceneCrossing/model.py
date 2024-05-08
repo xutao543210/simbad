@@ -9,7 +9,7 @@ from queue import Queue
 import dearpygui.dearpygui as dpg
 import traci
 
-from simModel.common.carFactory import Vehicle, DummyVehicle
+from simModel.common.carFactory import Vehicle, DummyVehicle, egoCar
 from simModel.common.gui import GUI
 from simModel.common.networkBuild import NetworkBuild
 from simModel.fixedScene.localScene import LocalScene
@@ -19,6 +19,8 @@ from utils.simBase import vehType
 
 class Model:
     '''
+        initialEgoPos: ego车初始位置
+        goalEgoPos: ego车目标位置
         localPos: position of the local area, e.g. (1003.34, 998.63);
         radius: radius of the local are, e.g. 50;
         netFile: network files, e.g. `example.net.xml`;
@@ -36,6 +38,8 @@ class Model:
     '''
 
     def __init__(self,
+                 initialEgoPos: tuple[float],
+                 goalEgoPos: tuple[float],
                  localPos: tuple[float],
                  radius: float,
                  netFile: str,
@@ -45,6 +49,8 @@ class Model:
                  SUMOGUI: bool = 1,
                  simNote: str = None
                  ) -> None:
+        self.initialEgoPos = initialEgoPos
+        self.goalEgoPos = goalEgoPos
         self.netFile = netFile
         self.rouFile = rouFile
         self.obsFile = obsFile
@@ -52,6 +58,7 @@ class Model:
         self.sim_mode: str = 'RealTime'
         self.timeStep = 0
 
+        # 创建固定视角
         self.dv = DummyVehicle(localPos[0], localPos[1], radius)
 
         if dataBase:
@@ -59,7 +66,7 @@ class Model:
         else:
             self.dataBase = datetime.strftime(
                 datetime.now(), '%Y-%m-%d_%H-%M-%S'
-            ) + '_fixedScene' + '.db'
+            ) + '_fixedSceneCrossing' + '.db'
 
         self.createDatabase()
         self.simDescriptionCommit(simNote)

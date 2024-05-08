@@ -1,6 +1,8 @@
 from simModel.fixedScene.model import Model
 from trafficManager.traffic_manager import TrafficManager
 
+
+
 import logger
 # config a logger, set use_stdout=True to output log to terminal
 log = logger.setup_app_level_logger(file_name="app_debug.log",
@@ -14,6 +16,7 @@ carlaVtypeFile = 'networkFiles/CarlaTown05/carlavtypes.rou.xml'
 carlaRouFile = carlaVtypeFile + ',' + carlaRouFile
 
 if __name__ == '__main__':
+    # 创建一个Model
     fmodel = Model(
         (300, 198),
         50,
